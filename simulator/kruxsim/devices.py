@@ -29,6 +29,9 @@ DOCK = "maixpy_dock"
 YAHBOOM = "maixpy_yahboom"
 CUBE = "maixpy_cube"
 WONDER_MV = "maixpy_wonder_mv"
+WONDER_K = "maixpy_wonder_k"
+TZT = "maixpy_tzt"
+EMBEDFIRE = "maixpy_embed_fire"
 
 WINDOW_SIZES = {
     M5STICKV: (320, 640),
@@ -38,6 +41,9 @@ WINDOW_SIZES = {
     YAHBOOM: (450, 600),
     CUBE: (484, 612),
     WONDER_MV: (410, 590),
+    WONDER_K: (500, 650),
+    TZT: (410,580),
+    EMBEDFIRE: (500, 671),
 }
 
 
@@ -50,7 +56,8 @@ images = {}
 
 def load_image(device):
     device = with_prefix(device)
-    if device == PC:
+    # TODO: remove WONDER_K after img is ready
+    if device == PC or device == WONDER_K:
         return None
     if device not in images:
         images[device] = pg.image.load(
@@ -74,7 +81,7 @@ def load_font(device):
                    os.path.join("..", "firmware", "font", "FusionPixel-14.bdf"),
                 ),
             ]
-        elif device in (DOCK, YAHBOOM, WONDER_MV):
+        elif device in (DOCK, YAHBOOM, WONDER_MV, TZT, WONDER_K, EMBEDFIRE):
             fonts[device] = [
                 pg.freetype.Font(
                     os.path.join("..", "firmware", "font", "ter-u16n.bdf")
@@ -144,4 +151,26 @@ def screenshot_rect(device):
             screen.get_rect().center[0] - 0,
             screen.get_rect().center[1] + 10,
         )
+    elif device == TZT:
+        rect.width -= 0
+        rect.height -= 57 #40
+        rect.center = (
+            screen.get_rect().center[0] - 0,
+            screen.get_rect().center[1] + 28, #36 #20
+        )
+    elif device == EMBEDFIRE:
+        rect.width -= 10
+        rect.height -= 30
+        rect.center = (
+            screen.get_rect().center[0] + 5,
+            screen.get_rect().center[1] + 15,
+        )
+    # TODO: fix after WONDER_K img is ready
+    # elif device == WONDER_K:
+    #     rect.width -= 0
+    #     rect.height -= 0
+    #     rect.center = (
+    #         screen.get_rect().center[0] - 0,
+    #         screen.get_rect().center[1] + 0,
+    #     )
     return rect

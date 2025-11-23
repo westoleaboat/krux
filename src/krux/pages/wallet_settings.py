@@ -58,7 +58,6 @@ PASSPHRASE_MAX_LEN = 200
 DERIVATION_KEYPAD = "1234567890/h"
 
 P2SH_DEFAULT_DERIVATION = "m/45h"
-MINISCRIPT_DEFAULT_DERIVATION = "m/48h/0h/0h/2h"
 
 
 class PassphraseEditor(Page):
@@ -83,6 +82,29 @@ class PassphraseEditor(Page):
             _, passphrase = submenu.run_loop()
             if passphrase in (ESC_KEY, MENU_EXIT):
                 return None
+
+            # Decode passphrase in case it's a "bytes" object
+            if isinstance(passphrase, bytes):
+                try:
+                    passphrase = passphrase.decode()
+                except:
+                    self.flash_error(t("Failed to load"))
+                    continue
+            # Check if passphrase string is within ascii range
+            if any(byte > 126 for byte in passphrase.encode()):
+                self.ctx.display.clear()
+                self.ctx.display.draw_hcentered_text(
+                    t(
+                        "Non-ASCII characters were detected in your passphrase. "
+                        "Krux cannot guarantee that other wallets will derive the "
+                        "same key."
+                    )
+                )
+                if not self.prompt(
+                    t("Proceed?"),
+                    BOTTOM_PROMPT_LINE,
+                ):
+                    continue
 
             from ..themes import theme
             from ..key import Key
@@ -126,7 +148,14 @@ class PassphraseEditor(Page):
             return MENU_CONTINUE
 
         try:
-            data = decrypt_kef(self.ctx, data).decode()
+            data = decrypt_kef(self.ctx, data)
+
+            # Cpython raises UnicodeDecodeError, MaixPy raises TypeError
+            try:
+                data = data.decode()
+            except:
+                self.flash_error(t("Failed to load"))
+                return MENU_CONTINUE
         except KeyError:
             self.flash_error(t("Failed to decrypt"))
             return MENU_CONTINUE

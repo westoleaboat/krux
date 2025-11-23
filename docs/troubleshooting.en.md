@@ -7,7 +7,7 @@ Make sure your device is being detected and serial ports are being mounted by ru
 ```bash
 ls /dev/ttyUSB*
 ```
-Expect one port to be listed for devices like M5StickV and Maix Dock `/dev/ttyUSB0`, and two ports for Maix Amigo and Maix Bit `/dev/ttyUSB0  /dev/ttyUSB1`.
+Expect one port to be listed for devices like M5StickV and Maix Dock `/dev/ttyUSB0`, and two ports for Maix Amigo `/dev/ttyUSB0  /dev/ttyUSB1`.
 
 If you don't see them, your OS may not be loading the correct drivers to create the serial ports to connect to. Ubuntu has a known bug where the `brltty` driver "kidnaps" serial devices. You can solve this problem by removing it:
 ```bash
@@ -48,12 +48,16 @@ If flashing fails with an error: `Greeting fail, check serial port (SLIP receive
 error-flashing-windows.en.txt
 ----8<----
 
+----8<----
+error-flashing-mac.en.txt
+----8<----
+
 
 ## **After Installing**
 
 ### Maix Amigo touchscreen doesn't work with v24.03.0 and later, but worked okay with v23.09.1?
 
-<img src="../img/amigo-inside-switch-up.jpg" align="right">
+<img src="/krux/img/amigo-inside-switch-up.jpg" align="right">
 
 We added a hardware IRQ (interrupt request) to the firmware, so when you open your Maix Amigo, you will see a switch in the middle of the device board, it must be in the upper position for the touchscreen to work with v24.03.0 and later.
 
@@ -109,7 +113,7 @@ You can also install [MaixPy IDE](https://dl.sipeed.com/shareURL/MAIX/MaixPy/ide
 ### Why isn't Krux scanning the QR code?
 
 <video style="width: 20%; min-width: 240px;" controls class="align-right margin-left">
-    <source src="../img/cam-adjust-pliers.mp4" type="video/mp4"></source>
+    <source src="/krux/img/cam-adjust-pliers.mp4" type="video/mp4"></source>
 </video>
 
 The screen displays exactly what Krux sees through its camera. If the QR code looks blurry, the lens may be out of focus. You can correct this by gently rotating the lens: turn it **counterclockwise (unscrewing to reduce focus distance)** or **clockwise (screwing to increase focus distance)** until the image sharpens. Be aware that the factory may have secured the lens with a small drop of glue, making the first adjustment a bit harder. To rotate the plastic lens ring, use your fingertip, tweezers, or small precision pliers (ideally wrapped with electrical tape to prevent scratches). Once adjusted, future focusing should be much easier.
@@ -159,7 +163,9 @@ Alternatively, it may be simpler to use a mobile wallet (BlueWallet or Nunchuk) 
 Please check how [entropy measurement](getting-started/features/entropy.md) works.
 
 ### Why isn't Krux detecting my microSD card or presenting an error?
-Starting from version 23.09.0, Krux supports SD card hot plugging. If you are using older versions, it may only detect the SD card at boot, so make sure Krux is turned off when inserting the microSD into it. To test the card compatibility use Krux [Tools -> Check SD Card](getting-started/features/tools.md/#check-sd-card).
+Starting from version **23.09.0**, Krux supports **SD card hot plugging**. If you’re using an older version, the SD card may only be detected at boot - so make sure to **power off Krux before inserting the microSD card**.
+
+To check card compatibility, go to [Tools -> Device Tests -> Check SD Card](getting-started/features/tools.md/#check-sd-card). Version **25.10.0** further improved SD card compatibility, so updating may resolve detection issues.
 
 **Note**: Make sure the SD card is using MBR/DOS partition table and FAT32 format, [in this video](https://www.youtube.com/watch?v=dlOiAJOPoME) Crypto Guide explains how to do this in Windows. If it is still not detected, try deleting all large files in it.
 

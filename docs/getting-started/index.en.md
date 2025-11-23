@@ -1,4 +1,4 @@
-<img src="../img/krux-devices.jpg" style="width: 40%; min-width: 260px;" class="align-right">
+<img src="/krux/img/krux-devices.jpg" style="width: 40%; min-width: 260px;" class="align-right">
 
 Krux is open-source Bitcoin signing firmware for devices with the K210 chipset; also known as a hardware signer. 
 
@@ -15,6 +15,7 @@ These wallet coordinators are currently **compatible with Krux**:
 - [Nunchuk](https://nunchuk.io/) (mobile)
 - [BlueWallet](https://bluewallet.io/) (mobile)
 - [Bitcoin Keeper](https://bitcoinkeeper.app/) (mobile)
+- [BULL Wallet](https://wallet.bullbitcoin.com) (mobile)
 
 **Warning!** Krux is INCOMPATIBLE with:
 
